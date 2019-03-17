@@ -1,6 +1,9 @@
 package com.ssstsar.zuul.filter;
 import java.io.InputStream;
-import java.util.Enumeration;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,11 +42,25 @@ public class RouteFilter extends ZuulFilter {
 	@Override
 	public Object run() {
 		try {
-		RequestContext ctx = RequestContext.getCurrentContext();
-		HttpServletRequest request = ctx.getRequest();
-		
+		RequestContext context = RequestContext.getCurrentContext();
+		HttpServletRequest request = context.getRequest();	
 		InputStream body = request.getInputStream();
 		String theString = IOUtils.toString(body);
+		if(theString.contains("")) {
+		    Map<String, List<String>> newParameterMap = new HashMap<>();
+		    Map<String, String[]> parameterMap = context.getRequest().getParameterMap();
+		    //getting the current parameter
+		    for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+		      String key = entry.getKey();
+		      String[] values = entry.getValue();
+		      newParameterMap.put(key, Arrays.asList(values));
+		    }
+		    //add a new parameter
+		    String authenticatedKey = "method";
+		    String authenticatedValue = "true";
+		    newParameterMap.put(authenticatedKey,Arrays.asList(authenticatedValue));
+		    context.setRequestQueryParams(newParameterMap);
+		}
 		log.error(theString);
 		log.error("RouteFilter: " + String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
 		
