@@ -27,13 +27,13 @@ public class WebServiceConfig extends WsConfigurerAdapter{
 	// ApplicationContext
 	// url -> /ws/*
 
-	@Bean
+	/*@Bean
 	public ServletRegistrationBean messageDispatcherServlet(ApplicationContext context) {
 		MessageDispatcherServlet messageDispatcherServlet = new MessageDispatcherServlet();
 		messageDispatcherServlet.setApplicationContext(context);
 		messageDispatcherServlet.setTransformWsdlLocations(true);
-		return new ServletRegistrationBean(messageDispatcherServlet, "/ws/*");
-	}
+		return new ServletRegistrationBean(messageDispatcherServlet, "/ws/services");
+	}*/
 
 	// /ws/courses.wsdl
 	// course-details.xsd
@@ -53,7 +53,7 @@ public class WebServiceConfig extends WsConfigurerAdapter{
 	}
 	
 
-	//XwsSecurityInterceptor
+	/*//XwsSecurityInterceptor
 	@Bean
 	public XwsSecurityInterceptor securityInterceptor(){
 		XwsSecurityInterceptor securityInterceptor = new XwsSecurityInterceptor();
@@ -75,6 +75,6 @@ public class WebServiceConfig extends WsConfigurerAdapter{
 	@Override
 	public void addInterceptors(List<EndpointInterceptor> interceptors) {
 		interceptors.add(securityInterceptor());
-	}
+	}*/
 
 }
